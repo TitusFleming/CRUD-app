@@ -16,7 +16,8 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(todos);
-  } catch (error) {
+  } catch (err) {
+    console.error('Error fetching todos:', err);
     return NextResponse.json({ error: 'Failed to fetch todos' }, { status: 500 });
   }
 }
