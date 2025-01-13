@@ -15,7 +15,7 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(todos);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch todos' }, { status: 500 });
   }
 }
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       data: { title, userId },
     });
     return NextResponse.json(todo);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create todo' }, { status: 500 });
   }
 }
@@ -51,7 +51,7 @@ export async function PUT(request: Request) {
       data: { completed },
     });
     return NextResponse.json(todo);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update todo' }, { status: 500 });
   }
 }
@@ -70,7 +70,7 @@ export async function DELETE(request: Request) {
       },
     });
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete todo' }, { status: 500 });
   }
 }
