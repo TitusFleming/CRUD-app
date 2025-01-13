@@ -5,7 +5,11 @@ import { useUser } from '@clerk/nextjs';
 import TodoList from '@/components/TodoList';
 
 export default function Home() {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
+
+  if (!isLoaded) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
 
   return (
     <div className="text-center mt-20">
@@ -13,9 +17,13 @@ export default function Home() {
         <TodoList />
       ) : (
         <div>
-          <h1 className="text-4xl font-bold mb-4">Welcome to the CRUD App</h1>
-          <p className="mb-8">Please sign in to access your todos.</p>
-          <SignIn routing="hash" />
+          <h1 className="text-4xl font-bold mb-4">Welcome to the Todo App</h1>
+          <p className="mb-8">Please sign in to continue</p>
+          <SignIn routing="hash" appearance={{
+            elements: {
+              rootBox: "mx-auto"
+            }
+          }} />
         </div>
       )}
     </div>

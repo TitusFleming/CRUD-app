@@ -9,15 +9,13 @@ export async function GET() {
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
   try {
     const todos = await prisma.todo.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(todos);
-  } catch (err) {
-    console.error('Error fetching todos:', err);
+  } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch todos' }, { status: 500 });
   }
 }
@@ -27,7 +25,6 @@ export async function POST(request: Request) {
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
   try {
     const { title } = await request.json();
     if (!title) {
@@ -37,7 +34,7 @@ export async function POST(request: Request) {
       data: { title, userId },
     });
     return NextResponse.json(todo);
-  } catch {
+  } catch (error) {
     return NextResponse.json({ error: 'Failed to create todo' }, { status: 500 });
   }
 }
@@ -47,7 +44,6 @@ export async function PUT(request: Request) {
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
   try {
     const { id, completed } = await request.json();
     const todo = await prisma.todo.update({
@@ -55,7 +51,7 @@ export async function PUT(request: Request) {
       data: { completed },
     });
     return NextResponse.json(todo);
-  } catch {
+  } catch (error) {
     return NextResponse.json({ error: 'Failed to update todo' }, { status: 500 });
   }
 }
@@ -65,7 +61,6 @@ export async function DELETE(request: Request) {
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
   try {
     const { id } = await request.json();
     await prisma.todo.delete({
@@ -75,7 +70,7 @@ export async function DELETE(request: Request) {
       },
     });
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
     return NextResponse.json({ error: 'Failed to delete todo' }, { status: 500 });
   }
 }
