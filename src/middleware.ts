@@ -1,6 +1,13 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default clerkMiddleware();
+const publicPaths = ["/*", "/sign-in*", "/sign-up*"];
+const isPublic = createRouteMatcher(publicPaths);
+
+export default clerkMiddleware((auth, req, evt) => {
+  if (isPublic(req)) {
+    return;
+  }
+});
 
 export const config = {
   matcher: [
