@@ -20,9 +20,14 @@ export default function TodoList() {
   }, []);
 
   const fetchTodos = async () => {
-    const response = await fetch('/api/todos');
-    const data = await response.json();
-    setTodos(data);
+    try {
+      const response = await fetch('/api/todos');
+      const data = await response.json();
+      setTodos(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Failed to fetch todos:', error);
+      setTodos([]);
+    }
   };
 
   const addTodo = async (e: React.FormEvent) => {
