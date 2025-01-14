@@ -1,12 +1,10 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
 
-export default clerkMiddleware({
-  debug: true  // This will help us see what's happening
-});
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
-    '/((?!_next|[^?]*\\.(html?|css|js|json|jpe?g|png|svg|ico|webp|webmanifest)).*)',
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
     '/(api|trpc)(.*)',
   ],
 };
