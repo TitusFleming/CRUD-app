@@ -64,10 +64,7 @@ export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
     await prisma.todo.delete({
-      where: { 
-        id: parseInt(id),
-        userId 
-      },
+      where: { id: parseInt(id), userId },
     });
     return NextResponse.json({ success: true });
   } catch {
